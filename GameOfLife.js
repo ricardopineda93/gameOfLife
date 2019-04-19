@@ -16,10 +16,10 @@ class GameOfLife {
   }
 
   setCell(value, row, column) {
-    if (this.board[row][column] !== undefined) {
-      this.board[row][column] = value;
+    if (row > this.width - 1 || column > this.height - 1) {
+      return 'this is an invalid cell';
     } else {
-      return 'invalid cell selection';
+      this.board[row][column] = value;
     }
   }
 
@@ -62,6 +62,10 @@ class GameOfLife {
    */
 
   livingNeighbors(row, column) {
+    if (row > this.width - 1 || column > this.height - 1) {
+      return 'this is an invalid cell';
+    }
+
     let total = 0;
     let neighbors = [];
 
@@ -101,10 +105,26 @@ class GameOfLife {
    * Given the present board, apply the rules to generate a new board
    */
 
+  // eslint-disable-next-line complexity
   tick() {
     const newBoard = this.makeBoard();
-
-    let rows;
+    for (let i = 0; i < this.board.length; i++) {
+      for (let j = 0; j < this.board[i].length; j++) {
+        let neighborsTotal = this.livingNeighbors(i, j);
+        let currentCell = this.getCell(i, j);
+        if (currentCell === 1 && neighborsTotal < 2) {
+          newBoard[i][j] = 0;
+        } else if (currentCell === 1 && neighborsTotal > 3) {
+          newBoard[i][j] = 0;
+        } else if (currentCell === 'dead' && neighborsTotal === 3) {
+          newBoard[i][j] = 1;
+        } else if (currentCell === 1) {
+          if (neighborsTotal === 2 || neighborsTotal === 3) {
+            newBoard[i][j] = 1;
+          }
+        }
+      }
+    }
     // TODO: Here is where you want to loop through all the cells
     // on the existing board and determine, based on it's neighbors,
     // whether the cell should be dead or alive in the new board
