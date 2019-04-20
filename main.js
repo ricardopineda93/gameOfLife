@@ -78,7 +78,6 @@ document.getElementById('board').addEventListener('click', event => {
 });
 
 document.getElementById('step_btn').addEventListener('click', event => {
-  debugger;
   gol.tick();
   paint();
   // TODO: Do one gol tick and paint
@@ -87,18 +86,22 @@ document.getElementById('step_btn').addEventListener('click', event => {
 let currentlyRunning = false;
 
 document.getElementById('play_btn').addEventListener('click', event => {
-  currentlyRunning = !currentlyRunning;
+  currentlyRunning = true;
   let playButton = document.getElementById('play_btn');
 
-  if (currentlyRunning) {
-    playButton.disabled = true;
-    setInterval(() => {
+  var interval = setInterval(() => {
+    if (currentlyRunning === true) {
       gol.tick();
       paint();
-    }, 300);
-  } else {
-    playButton.disabled = false;
-  }
+      playButton.disabled = true;
+    } else if (currentlyRunning === false) {
+      playButton.disabled = false;
+      clearInterval(interval);
+    }
+  }, 300);
+
+  interval();
+
   // TODO: Start playing by calling `tick` and paint
   // repeatedly every fixed time interval.
   // HINT:
@@ -131,6 +134,12 @@ document.getElementById('random_btn').addEventListener('click', event => {
   // TODO: Randomize the board and paint
 });
 
+document.getElementById('pause_btn').addEventListener('click', event => {
+  currentlyRunning = false;
+});
+
 document.getElementById('clear_btn').addEventListener('click', event => {
-  // TODO: Clear the board and paint
+  currentlyRunning = false;
+  gol.board = gol.makeBoard();
+  paint();
 });
