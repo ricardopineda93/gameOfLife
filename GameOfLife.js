@@ -2,6 +2,7 @@ class GameOfLife {
   constructor(width, height) {
     this.width = width;
     this.height = height;
+    this.currentlyRunning = false;
     this.board = this.makeBoard();
   }
 
@@ -137,9 +138,3 @@ class GameOfLife {
     this.board = newBoard;
   }
 }
-
-let game = new GameOfLife(5, 5);
-
-game.toggleCell(1, 2);
-game.toggleCell(2, 2);
-game.toggleCell(3, 2);

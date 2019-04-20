@@ -83,25 +83,23 @@ document.getElementById('step_btn').addEventListener('click', event => {
   // TODO: Do one gol tick and paint
 });
 
-let currentlyRunning = false;
-
 document.getElementById('play_btn').addEventListener('click', event => {
-  currentlyRunning = true;
-  let playButton = document.getElementById('play_btn');
+  //debugger;
+  gol.currentlyRunning = true;
 
-  var interval = setInterval(() => {
-    if (currentlyRunning === true) {
+  const interval = setInterval(() => {
+    let playButton = document.getElementById('play_btn');
+    if (gol.currentlyRunning === true) {
       gol.tick();
       paint();
       playButton.disabled = true;
-    } else if (currentlyRunning === false) {
+    } else if (gol.currentlyRunning === false) {
       playButton.disabled = false;
       clearInterval(interval);
     }
   }, 300);
 
   interval();
-
   // TODO: Start playing by calling `tick` and paint
   // repeatedly every fixed time interval.
   // HINT:
@@ -135,11 +133,11 @@ document.getElementById('random_btn').addEventListener('click', event => {
 });
 
 document.getElementById('pause_btn').addEventListener('click', event => {
-  currentlyRunning = false;
+  gol.currentlyRunning = false;
 });
 
 document.getElementById('clear_btn').addEventListener('click', event => {
-  currentlyRunning = false;
+  gol.currentlyRunning = false;
   gol.board = gol.makeBoard();
   paint();
 });
