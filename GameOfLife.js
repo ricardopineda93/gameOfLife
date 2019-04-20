@@ -62,7 +62,7 @@ class GameOfLife {
    */
 
   livingNeighbors(row, column) {
-    if (row > this.width - 1 || column > this.height - 1) {
+    if (row > this.height - 1 || column > this.width - 1) {
       return 'this is an invalid cell';
     }
 
@@ -108,8 +108,8 @@ class GameOfLife {
   // eslint-disable-next-line complexity
   tick() {
     const newBoard = this.makeBoard();
-    for (let i = 0; i < this.board.length; i++) {
-      for (let j = 0; j < this.board[i].length; j++) {
+    for (let i = 0; i < this.height; i++) {
+      for (let j = 0; j < this.width; j++) {
         let neighborsTotal = this.livingNeighbors(i, j);
         let currentCell = this.getCell(i, j);
         if (currentCell === 1 && neighborsTotal < 2) {
@@ -137,3 +137,9 @@ class GameOfLife {
     this.board = newBoard;
   }
 }
+
+let game = new GameOfLife(5, 5);
+
+game.toggleCell(1, 2);
+game.toggleCell(2, 2);
+game.toggleCell(3, 2);

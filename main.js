@@ -70,16 +70,35 @@ const paint = () => {
 document.getElementById('board').addEventListener('click', event => {
   let xCoord = event.target.getAttribute('data-row');
   let yCoord = event.target.getAttribute('data-col');
+
+  gol.toggleCell(xCoord, yCoord);
+  paint();
+
   // TODO: Toggle clicked cell (event.target) and paint
 });
 
 document.getElementById('step_btn').addEventListener('click', event => {
+  debugger;
   gol.tick();
   paint();
   // TODO: Do one gol tick and paint
 });
 
+let currentlyRunning = false;
+
 document.getElementById('play_btn').addEventListener('click', event => {
+  currentlyRunning = !currentlyRunning;
+  let playButton = document.getElementById('play_btn');
+
+  if (currentlyRunning) {
+    playButton.disabled = true;
+    setInterval(() => {
+      gol.tick();
+      paint();
+    }, 300);
+  } else {
+    playButton.disabled = false;
+  }
   // TODO: Start playing by calling `tick` and paint
   // repeatedly every fixed time interval.
   // HINT:
@@ -87,6 +106,28 @@ document.getElementById('play_btn').addEventListener('click', event => {
 });
 
 document.getElementById('random_btn').addEventListener('click', event => {
+  let maxColIndexForBoard = gol.width - 1;
+  let maxRowIndexForBoard = gol.height - 1;
+  let finalBoardIndexCell = gol.height * gol.width - 1;
+
+  function generateRandomNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  const randomizedNumberOfCellsToFill = generateRandomNumber(
+    0,
+    finalBoardIndexCell
+  );
+
+  for (let i = 0; i <= randomizedNumberOfCellsToFill; i++) {
+    gol.toggleCell(
+      generateRandomNumber(0, maxRowIndexForBoard),
+      generateRandomNumber(0, maxColIndexForBoard)
+    );
+  }
+
+  paint();
+
   // TODO: Randomize the board and paint
 });
 
