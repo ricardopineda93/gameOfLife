@@ -36,9 +36,7 @@ class GameOfLife {
    */
 
   makeBoard() {
-    // TODO: Create and return an 2D Array
-    // with `this.heigh` as rows and `this.width` as cols.
-    // For example, given a height of 4 and a width of 3, it will generate:
+    // Creates and returns an 2D Array
     // [
     //  [0, 0, 0],
     //  [0, 0, 0],
@@ -70,26 +68,31 @@ class GameOfLife {
     let total = 0;
     let neighbors = [];
 
+    // On cell's row
     if (this.board[row] !== undefined) {
-      let n1 = this.board[row][column + 1];
-      let n7 = this.board[row][column - 1];
-      neighbors.push(n1, n7);
+      let sameRowLeft = this.board[row][column + 1];
+      // Omit the cell we are currently on when on it's same row.
+      let sameRowRight = this.board[row][column - 1];
+      neighbors.push(sameRowLeft, sameRowRight);
     }
 
+    // Row directly above
     if (this.board[row - 1] !== undefined) {
-      let n2 = this.board[row - 1][column + 1];
-      let n5 = this.board[row - 1][column];
-      let n8 = this.board[row - 1][column - 1];
-      neighbors.push(n2, n5, n8);
+      let upperRight = this.board[row - 1][column + 1];
+      let upperCenter = this.board[row - 1][column];
+      let upperLeft = this.board[row - 1][column - 1];
+      neighbors.push(upperRight, upperCenter, upperLeft);
     }
 
+    // Row directly below
     if (this.board[row + 1] !== undefined) {
-      let n3 = this.board[row + 1][column + 1];
-      let n4 = this.board[row + 1][column];
-      let n6 = this.board[row + 1][column - 1];
-      neighbors.push(n3, n4, n6);
+      let lowerRight = this.board[row + 1][column + 1];
+      let lowerCenter = this.board[row + 1][column];
+      let lowerLeft = this.board[row + 1][column - 1];
+      neighbors.push(lowerRight, lowerCenter, lowerLeft);
     }
 
+    // Calculates total num of neighbors, omitting undefined cells out of board bounds.
     for (let i = 0; i < neighbors.length; i++) {
       if (neighbors[i] === undefined) {
         continue;
@@ -99,16 +102,17 @@ class GameOfLife {
     }
 
     return total;
-    // TODO: Return the count of living neighbors.
   }
 
-  /**
-   * Given the present board, apply the rules to generate a new board
-   */
-
-  // eslint-disable-next-line complexity
   tick() {
     const newBoard = this.makeBoard();
+    // Loop through all the cells
+    // on the existing board and determine, based on it's neighbors,
+    // whether the cell should be dead or alive in the new board
+    // You need to:
+    // 1. Count alive neighbors for all cells
+    // 2. Set the next state of all cells in newBoard,
+    // based on their current alive neighbors
     for (let i = 0; i < this.height; i++) {
       for (let j = 0; j < this.width; j++) {
         let neighborsTotal = this.livingNeighbors(i, j);
@@ -126,15 +130,6 @@ class GameOfLife {
         }
       }
     }
-    // TODO: Here is where you want to loop through all the cells
-    // on the existing board and determine, based on it's neighbors,
-    // whether the cell should be dead or alive in the new board
-    // (the next iteration of the game)
-    //
-    // You need to:
-    // 1. Count alive neighbors for all cells
-    // 2. Set the next state of all cells in newBoard,
-    // based on their current alive neighbors
     this.board = newBoard;
   }
 }
