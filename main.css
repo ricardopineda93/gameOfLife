@@ -1,6 +1,7 @@
 body {
   font-family: Futura, Helvetica, Arial, sans-serif;
   color: #444;
+  background: #8cc8dd;
 }
 
 h1 {
@@ -15,6 +16,7 @@ h1 {
 
 #board {
   border-collapse: collapse;
+  background: pink;
 }
 
 #board td {
@@ -24,7 +26,7 @@ h1 {
 }
 
 td.alive {
-  background-color: #8cc8dd;
+  background-color: ghostwhite;
 }
 
 #control_panel {

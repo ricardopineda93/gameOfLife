@@ -1,5 +1,5 @@
-const width = 25;
-const height = 20; // width and height dimensions of the board
+const width = 35;
+const height = 30; // width and height dimensions of the board
 
 /**
  * Create a Game of Life instance
@@ -48,19 +48,6 @@ const paint = () => {
       tds[i].className = '';
     }
   }
-
-  // TODO:
-  //   1. For each <td> in the table:
-  //     a. If its corresponding cell in gol instance is alive,
-  //        give the <td> the `alive` CSS class.
-  //     b. Otherwise, remove the `alive` class.
-  //
-  // To find all the <td>s in the table, you might query the DOM for them, or you
-  // could choose to collect them when we create them in createTable.
-  //
-  // HINT:
-  //   https://developer.mozilla.org/en-US/docs/Web/API/Element/classList
-  //   https://developer.mozilla.org/en-US/docs/Web/API/Element/getElementsByTagName
 };
 
 /**
@@ -102,8 +89,6 @@ document.getElementById('play_btn').addEventListener('click', event => {
   interval();
   // TODO: Start playing by calling `tick` and paint
   // repeatedly every fixed time interval.
-  // HINT:
-  // https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval
 });
 
 document.getElementById('random_btn').addEventListener('click', event => {
